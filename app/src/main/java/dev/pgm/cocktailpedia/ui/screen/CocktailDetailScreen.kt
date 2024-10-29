@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import dev.pgm.cocktailpedia.models.Cocktail
+import dev.pgm.domain.Cocktail
 
 @Composable
-fun CocktailDetailScreen(cocktail: Cocktail,modifier: Modifier = Modifier) {
+fun CocktailDetailScreen(cocktail: Cocktail, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()

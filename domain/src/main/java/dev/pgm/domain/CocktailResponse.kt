@@ -1,4 +1,4 @@
-package dev.pgm.cocktailpedia.models
+package dev.pgm.domain
 
 data class CocktailResponse(
     val drinks: List<Cocktail>?
