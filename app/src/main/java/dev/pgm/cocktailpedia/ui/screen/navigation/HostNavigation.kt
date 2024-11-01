@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dev.pgm.cocktailpedia.CocktailViewModel
+import dev.pgm.cocktailpedia.models.Cocktail
 import dev.pgm.cocktailpedia.ui.screen.CocktailDetailScreen
 import dev.pgm.cocktailpedia.ui.screen.CocktailListScreen
 import dev.pgm.cocktailpedia.ui.screen.Screen
