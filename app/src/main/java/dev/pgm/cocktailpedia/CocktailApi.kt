@@ -1,11 +1,10 @@
-package dev.pgm.data
+package dev.pgm.cocktailpedia
 
-
-import dev.pgm.domain.CocktailResponse
+import dev.pgm.cocktailpedia.models.CocktailResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface CocktailRemoteDataSource {
+interface CocktailApi {
     @GET("search.php")
     suspend fun getCocktailsByFirstLetter(@Query("f") firstLetter: String): CocktailResponse
 }
