@@ -1,4 +1,4 @@
-package dev.pgm.domain
+package dev.pgm.cocktailpedia.models
 
 
 data class Cocktail(
