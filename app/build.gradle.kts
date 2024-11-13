@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    kotlin("plugin.serialization") version "1.9.0" // Use the appropriate version
+
 }
 
 android {
@@ -36,6 +38,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     composeCompiler {
         enableStrongSkippingMode = true
@@ -73,6 +78,10 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
 
     implementation(libs.coil.compose)
-
     implementation(libs.kotlinx.coroutines.android)
+    //Serializacion
+    implementation(libs.kotlinx.serialization.json)// Or your preferred format
+
+    implementation (libs.retrofit.v290)
+    implementation (libs.okhttp)
 }
