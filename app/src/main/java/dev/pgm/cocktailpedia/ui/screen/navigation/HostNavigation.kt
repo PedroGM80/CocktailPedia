@@ -6,17 +6,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import dev.pgm.cocktailpedia.CocktailViewModel
 import dev.pgm.cocktailpedia.ui.screen.CocktailDetailScreen
 import dev.pgm.cocktailpedia.ui.screen.CocktailListScreen
-import dev.pgm.cocktailpedia.ui.screen.Screen
+import kotlinx.serialization.Serializable
 
-private const val COCKTAIL_ID = "cocktailId"
+
+@Serializable
+object ScreenCocktailList
+
+@Serializable
+data class ScreenCocktailDetail(val cocktailId: String)
 
 @Composable
 fun HostNavigation(viewModel: CocktailViewModel, modifier: Modifier = Modifier) {
@@ -27,15 +31,15 @@ fun HostNavigation(viewModel: CocktailViewModel, modifier: Modifier = Modifier) 
     Scaffold { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = Screen.CocktailList.route,
+            startDestination = ScreenCocktailList,
             modifier = modifier.padding(paddingValues)
         ) {
-            composable(Screen.CocktailList.route) {
+            composable<ScreenCocktailList> {
                 CocktailListScreen(
                     cocktails = cocktails,
                     isLoading = isLoading,
                     onCocktailClick = { cocktail ->
-                        navController.navigate(Screen.CocktailDetail.createRoute(cocktail.idDrink))
+                        navController.navigate(ScreenCocktailDetail(cocktail.idDrink))
                     },
                     onLetterSelected = { letter ->
                         viewModel.fetchCocktailsByLetter(letter)
@@ -43,14 +47,9 @@ fun HostNavigation(viewModel: CocktailViewModel, modifier: Modifier = Modifier) 
                 )
             }
 
-            composable(
-                route = Screen.CocktailDetail.route,
-                arguments = listOf(
-                    navArgument(COCKTAIL_ID) { type = NavType.StringType }
-                )
-            ) { backStackEntry ->
-                val cocktailId = backStackEntry.arguments?.getString(COCKTAIL_ID)
-                val selectedCocktail = cocktails.find { it.idDrink == cocktailId }
+            composable<ScreenCocktailDetail> { backStackEntry ->
+                val args = backStackEntry.toRoute<ScreenCocktailDetail>()
+                val selectedCocktail = cocktails.find { it.idDrink == args.cocktailId }
 
                 selectedCocktail?.let { cocktail ->
                     CocktailDetailScreen(cocktail = cocktail)
