@@ -2,14 +2,12 @@ package dev.pgm.cocktailpedia
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
+import dev.pgm.cocktailpedia.models.Cocktail
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import dev.pgm.domain.Cocktail
-import dev.pgm.usecases.GetCocktailUseCase
 
-class CocktailViewModel(private val getCocktailUseCase: GetCocktailUseCase) : ViewModel() {
+class CocktailViewModel : ViewModel() {
     private val _cocktails = MutableStateFlow<List<Cocktail>>(emptyList())
     val cocktails: StateFlow<List<Cocktail>> = _cocktails
 
@@ -19,7 +17,7 @@ class CocktailViewModel(private val getCocktailUseCase: GetCocktailUseCase) : Vi
     fun fetchCocktailsByLetter(letter: String) {
         viewModelScope.launch {
             _isLoading.value = true
-            val response = getCocktailUseCase.getCocktailsByFirstLetter(letter)
+            val response = RetrofitInstance.api.getCocktailsByFirstLetter(letter)
             _cocktails.value = response.drinks ?: emptyList()
             _isLoading.value = false
         }

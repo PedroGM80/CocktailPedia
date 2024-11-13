@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.pgm.cocktailpedia.CocktailViewModel
+import dev.pgm.cocktailpedia.models.Cocktail
 import dev.pgm.cocktailpedia.ui.screen.CocktailDetailScreen
 import dev.pgm.cocktailpedia.ui.screen.CocktailListScreen
 import kotlinx.serialization.Serializable

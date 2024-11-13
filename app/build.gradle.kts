@@ -52,9 +52,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":usecases"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)
@@ -67,13 +64,13 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.androidx.material3.android)
     debugImplementation(libs.compose.ui.tooling)
-    //Google fonts
-    implementation(libs.androidx.ui.text.google.fonts)
+//Google fonts
+    implementation ("androidx.compose.ui:ui-text-google-fonts:1.6.0")
     //Icons
-    implementation(libs.androidx.material)
-    implementation(libs.androidx.material.icons.extended)
+    implementation("androidx.compose.material:material:1.7.4")
+    implementation ("androidx.compose.material:material-icons-extended:1.6.2")
 
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     implementation(platform(libs.androidx.compose.bom))
