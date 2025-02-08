@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CocktailPedia</string>
     <string name="cocktailpedia">Cocktailpedia</string>
+    <string name="no_cocktails_available">No cocktails available</string>
 </resources>

@@ -4,9 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import dev.pgm.cocktailpedia.ui.cocktailUseCase
 import dev.pgm.cocktailpedia.ui.screen.navigation.HostNavigation
 import dev.pgm.cocktailpedia.ui.theme.CocktailPediaTheme
+import dev.pgm.data.CocktailRepository
+import dev.pgm.usecases.GetCocktailUseCase
 
 
 class MainActivity : ComponentActivity() {
@@ -14,6 +15,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val cocktailRepository = CocktailRepository(CocktailServerDataSource())
+        val cocktailUseCase = GetCocktailUseCase( cocktailRepository)
         val viewModel =   CocktailViewModel(cocktailUseCase)
         enableEdgeToEdge()
         setContent {
