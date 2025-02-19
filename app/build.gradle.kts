@@ -3,12 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     kotlin("plugin.serialization") version "1.9.0" // Use the appropriate version
-
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "dev.pgm.cocktailpedia"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.pgm.cocktailpedia"
@@ -30,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -87,4 +87,9 @@ dependencies {
 
     implementation (libs.retrofit.v290)
     implementation (libs.okhttp)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)  // KSP para la generación de código
+    testImplementation(libs.room.testing)  // Opcional, si harás pruebas
 }
