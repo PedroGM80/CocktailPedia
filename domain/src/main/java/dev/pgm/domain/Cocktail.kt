@@ -2,6 +2,7 @@ package dev.pgm.domain
 
 
 data class Cocktail(
+    val isFavorite: Boolean,
     val idDrink: String,
     val strDrink: String,
     val strDrinkThumb: String,
@@ -34,3 +35,6 @@ data class Cocktail(
         )
     }
 }
+
+
+
