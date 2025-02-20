@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -23,7 +21,6 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -49,29 +46,11 @@ fun CocktailListScreen(
     val gridState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
 
-    Scaffold(topBar = {
-        TopAppBar(
-            modifier = modifier.height(80.dp),
-            title = {
-                Row(
-                    modifier = modifier
-                        .wrapContentHeight()
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.Top
-                ) {
-                    Text(
-                        text = stringResource(R.string.cocktailpedia),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineMedium,
-                    )
-                }
-            })
-    }) { paddingValues ->
+    Scaffold(topBar = {}) { paddingValues ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+                .padding(top = paddingValues.calculateTopPadding())
+                .fillMaxWidth(),
         ) {
             Row(
                 modifier = Modifier
@@ -144,7 +123,7 @@ fun EmptyCocktailList() {
             text = stringResource(R.string.no_cocktails_available),
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .align(Alignment.Center) // Center the text
+                .align(Alignment.Center)
                 .padding(16.dp),
             style = MaterialTheme.typography.titleLarge
         )

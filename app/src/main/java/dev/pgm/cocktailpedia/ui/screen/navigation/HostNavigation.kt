@@ -13,6 +13,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import dev.pgm.cocktailpedia.CocktailViewModel
+import dev.pgm.cocktailpedia.ui.component.TopBarWithMenu
+import dev.pgm.cocktailpedia.ui.screen.AboutScreen
+import dev.pgm.cocktailpedia.ui.screen.AddCocktailScreen
 import dev.pgm.cocktailpedia.ui.screen.CocktailDetailScreen
 import dev.pgm.cocktailpedia.ui.screen.CocktailListScreen
 import dev.pgm.domain.Cocktail
@@ -42,7 +45,9 @@ fun HostNavigation(
     fetchCocktailsByLetter: (String) -> Unit,
     navigate: (ScreenCocktailDetail) -> Unit,
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(
+        topBar = { TopBarWithMenu(navController) }
+    ) { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = ScreenCocktailList,
@@ -55,6 +60,15 @@ fun HostNavigation(
             composable<ScreenCocktailDetail> { backStackEntry ->
                 DetailScreenContent(backStackEntry, cocktails)
             }
+
+            composable<ScreenAbout> {
+                AboutScreen()
+            }
+
+            composable<ScreenAddCocktail> {
+                AddCocktailScreen()
+            }
+
         }
     }
 }

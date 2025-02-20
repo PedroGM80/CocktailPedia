@@ -1,0 +1,57 @@
+package dev.pgm.cocktailpedia.ui.component
+
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import dev.pgm.cocktailpedia.ui.screen.navigation.ScreenAbout
+import dev.pgm.cocktailpedia.ui.screen.navigation.ScreenAddCocktail
+
+@Composable
+fun TopBarWithMenu(navController: NavController) {
+    var expanded by remember { mutableStateOf(false) }
+
+    TopAppBar(
+        title = { Text("CocktailPedia") },
+        actions = {
+            IconButton(onClick = { expanded = true }) {
+                Icon(Icons.Default.MoreVert, contentDescription = "Menú")
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Añadir Cocktail") },
+                    onClick = {
+                        expanded = false
+                        navController.navigate(ScreenAddCocktail)
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Acerca de") },
+                    onClick = {
+                        expanded = false
+                        navController.navigate(ScreenAbout)
+                    }
+                )
+            }
+        },
+        modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
+
+    )
+}
