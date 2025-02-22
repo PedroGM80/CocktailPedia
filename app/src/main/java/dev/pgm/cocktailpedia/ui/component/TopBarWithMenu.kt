@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,10 +27,13 @@ fun TopBarWithMenu(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
 
     TopAppBar(
-        title = { Text("CocktailPedia") },
+        title = { Text("CocktailPedia", color = colorScheme.onPrimary) },
         actions = {
             IconButton(onClick = { expanded = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "Menú")
+                Icon(
+                    Icons.Default.MoreVert, contentDescription = "Menú",
+                    tint = colorScheme.onPrimary
+                )
             }
             DropdownMenu(
                 expanded = expanded,

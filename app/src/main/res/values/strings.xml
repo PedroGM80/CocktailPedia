@@ -2,4 +2,6 @@
     <string name="app_name">CocktailPedia</string>
     <string name="cocktailpedia">Cocktailpedia</string>
     <string name="no_cocktails_available">No cocktails available</string>
+    <string name="desarrollado_en_el_curso">Desarrollado en el curso Arquitect Coder</string>
+    <string name="description">Esta es una aplicación Android que te permite explorar una gran variedad de cócteles. Puedes buscar cócteles por letra, viene con su receta y una foto para que puedas visualizar cómo debería lucir.</string>
 </resources>
