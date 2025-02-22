@@ -1,11 +1,13 @@
 package dev.pgm.cocktailpedia.ui.screen.navigation
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -45,6 +47,7 @@ fun HostNavigation(
     fetchCocktailsByLetter: (String) -> Unit,
     navigate: (ScreenCocktailDetail) -> Unit,
 ) {
+    val context = LocalContext.current
     Scaffold(
         topBar = { TopBarWithMenu(navController) }
     ) { paddingValues ->
@@ -66,7 +69,9 @@ fun HostNavigation(
             }
 
             composable<ScreenAddCocktail> {
-                AddCocktailScreen()
+                AddCocktailScreen(onCocktailAdded = {
+                    Toast.makeText(context, "Cocktail added", Toast.LENGTH_SHORT).show()
+                })
             }
 
         }
