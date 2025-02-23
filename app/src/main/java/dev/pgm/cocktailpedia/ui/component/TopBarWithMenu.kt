@@ -13,13 +13,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import dev.pgm.cocktailpedia.R
 import dev.pgm.cocktailpedia.ui.screen.navigation.ScreenAbout
 import dev.pgm.cocktailpedia.ui.screen.navigation.ScreenAddCocktail
 
@@ -29,11 +32,14 @@ fun TopBarWithMenu(navController: NavController) {
     var expanded by remember { mutableStateOf(false) }
 
     TopAppBar(
-        title = { Text("CocktailPedia", color = colorScheme.onPrimary) },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = colorScheme.primary
+        ),
+        title = { Text(stringResource(R.string.app_name), color = colorScheme.onPrimary) },
         actions = {
             IconButton(onClick = { expanded = true }) {
                 Icon(
-                    Icons.Default.MoreVert, contentDescription = "Menú",
+                    Icons.Default.MoreVert, contentDescription = stringResource(R.string.menu),
                     tint = colorScheme.onPrimary
                 )
             }
@@ -42,14 +48,14 @@ fun TopBarWithMenu(navController: NavController) {
                 onDismissRequest = { expanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Añadir Cocktail") },
+                    text = { Text(stringResource(R.string.add_cocktail)) },
                     onClick = {
                         expanded = false
                         navController.navigate(ScreenAddCocktail)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Acerca de") },
+                    text = { Text(stringResource(R.string.about_us)) },
                     onClick = {
                         expanded = false
                         navController.navigate(ScreenAbout)
@@ -57,7 +63,7 @@ fun TopBarWithMenu(navController: NavController) {
                 )
             }
         },
-        modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
-
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.statusBars)
     )
 }

@@ -1,6 +1,8 @@
 plugins {
-    id("java-library")
+    alias(libs.plugins.java.library)
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.ksp)
+
 }
 
 java {
@@ -11,4 +13,9 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":data"))
+
+    //Koin
+    implementation (libs.koin.core)
+    implementation (libs.koin.annotations)
+    ksp (libs.koin.ksp.compiler)
 }

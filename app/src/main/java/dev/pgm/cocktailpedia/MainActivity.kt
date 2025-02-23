@@ -4,30 +4,27 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import dev.pgm.cocktailpedia.ui.screen.navigation.HostNavigation
+import dev.pgm.cocktailpedia.ui.screen.AddCocktailViewModel
+import dev.pgm.cocktailpedia.ui.screen.CocktailViewModel
+import dev.pgm.cocktailpedia.ui.screen.navigation.Host
 import dev.pgm.cocktailpedia.ui.theme.CocktailPediaTheme
-import dev.pgm.data.CocktailRepository
-import dev.pgm.usecases.GetCocktailUseCase
-import dev.pgm.usecases.SynchronizeCocktailUseCase
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val cocktailRepository =
-            CocktailRepository(
-                CocktailServerDataSource(),
-                CocktailLocalDataSource(this)
-            )
-
-        val getCocktailUseCase = GetCocktailUseCase(cocktailRepository)
-        val syncCocktailUseCase = SynchronizeCocktailUseCase(cocktailRepository)
-
-        val viewModel = CocktailViewModel(getCocktailUseCase, syncCocktailUseCase)
+        val cocktailViewModel: CocktailViewModel = getViewModel()
+        val addCocktailViewModel: AddCocktailViewModel = getViewModel()
         enableEdgeToEdge()
         setContent {
-            CocktailPediaTheme { HostNavigation(viewModel) }
+            CocktailPediaTheme {
+                Host(
+                    viewModel = cocktailViewModel,
+                    addCocktailViewModel = addCocktailViewModel,
+                )
+            }
         }
     }
 }

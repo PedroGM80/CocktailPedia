@@ -1,4 +1,4 @@
-package dev.pgm.cocktailpedia.ui.viewmodels
+package dev.pgm.cocktailpedia.ui.screen
 
 import android.content.Context
 import android.net.Uri
@@ -8,21 +8,21 @@ import androidx.lifecycle.viewModelScope
 import dev.pgm.cocktailpedia.CocktailLocalDataSource
 import dev.pgm.domain.Cocktail
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
+@KoinViewModel
 class AddCocktailViewModel : ViewModel() {
     private var temporaryFileUri: Uri? = null
 
     private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
-
     private val _error = MutableStateFlow<String?>(null)
-    val error = _error.asStateFlow()
+
 
     fun createImageUri(context: Context): Uri {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())

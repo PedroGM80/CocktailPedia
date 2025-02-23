@@ -14,21 +14,27 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import dev.pgm.cocktailpedia.CocktailViewModel
 import dev.pgm.cocktailpedia.ui.component.TopBarWithMenu
 import dev.pgm.cocktailpedia.ui.screen.AboutScreen
 import dev.pgm.cocktailpedia.ui.screen.AddCocktailScreen
+import dev.pgm.cocktailpedia.ui.screen.AddCocktailViewModel
 import dev.pgm.cocktailpedia.ui.screen.CocktailDetailScreen
 import dev.pgm.cocktailpedia.ui.screen.CocktailListScreen
+import dev.pgm.cocktailpedia.ui.screen.CocktailViewModel
 import dev.pgm.domain.Cocktail
 
 
 @Composable
-fun HostNavigation(viewModel: CocktailViewModel, modifier: Modifier = Modifier) {
+fun Host(
+    viewModel: CocktailViewModel,
+    addCocktailViewModel: AddCocktailViewModel,
+    modifier: Modifier = Modifier
+) {
     val navController = rememberNavController()
     val cocktails by viewModel.cocktails.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     HostNavigation(
+        addCocktailViewModel = addCocktailViewModel,
         navController = navController,
         cocktails = cocktails,
         isLoading = isLoading,
@@ -40,6 +46,7 @@ fun HostNavigation(viewModel: CocktailViewModel, modifier: Modifier = Modifier) 
 
 @Composable
 fun HostNavigation(
+    addCocktailViewModel: AddCocktailViewModel,
     modifier: Modifier = Modifier,
     navController: NavHostController,
     cocktails: List<Cocktail>,
@@ -71,7 +78,7 @@ fun HostNavigation(
             composable<ScreenAddCocktail> {
                 AddCocktailScreen(onCocktailAdded = {
                     Toast.makeText(context, "Cocktail added", Toast.LENGTH_SHORT).show()
-                })
+                }, viewModel = addCocktailViewModel)
             }
 
         }

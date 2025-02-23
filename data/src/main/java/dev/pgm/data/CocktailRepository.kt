@@ -3,7 +3,9 @@ package dev.pgm.data
 import dev.pgm.domain.Cocktail
 import dev.pgm.domain.CocktailResponse
 import dev.pgm.domain.ICocktailRepository
+import org.koin.core.annotation.Factory
 
+@Factory
 class CocktailRepository(
     private val remoteDataSource: CocktailRemoteDataSource,
     private val localDataSource: CocktailLocalDataSource

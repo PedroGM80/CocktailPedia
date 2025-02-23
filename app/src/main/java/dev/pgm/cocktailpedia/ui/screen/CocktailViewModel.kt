@@ -1,4 +1,4 @@
-package dev.pgm.cocktailpedia
+package dev.pgm.cocktailpedia.ui.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,10 @@ import dev.pgm.usecases.SynchronizeCocktailUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+
+@KoinViewModel
 class CocktailViewModel(private val getCocktailUseCase: GetCocktailUseCase
 ,  private val syncCocktailUseCase: SynchronizeCocktailUseCase
 ) : ViewModel() {

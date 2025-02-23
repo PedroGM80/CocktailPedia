@@ -52,14 +52,13 @@ import androidx.compose.ui.layout.ContentScale.Companion.FillBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import dev.pgm.cocktailpedia.ui.viewmodels.AddCocktailViewModel
 import dev.pgm.domain.Cocktail
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCocktailScreen(
-    onCocktailAdded: () -> Unit, viewModel: AddCocktailViewModel = AddCocktailViewModel()
+    onCocktailAdded: () -> Unit, viewModel: AddCocktailViewModel
 ) {
     var name by remember { mutableStateOf("") }
     var instructions by remember { mutableStateOf("") }

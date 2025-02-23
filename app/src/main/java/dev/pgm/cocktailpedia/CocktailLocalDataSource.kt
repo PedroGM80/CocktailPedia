@@ -7,7 +7,9 @@ import dev.pgm.cocktailpedia.framework.dataBase.toCocktailDto
 import dev.pgm.data.CocktailLocalDataSource
 import dev.pgm.domain.Cocktail
 import dev.pgm.domain.CocktailResponse
+import org.koin.core.annotation.Factory
 
+@Factory
 class CocktailLocalDataSource(context: Context) : CocktailLocalDataSource {
     private val db = CocktailDatabase.getDatabase(context)
     private val dao = db.cocktailDao()

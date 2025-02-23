@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    kotlin("plugin.serialization") version "1.9.0" // Use the appropriate version
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -38,6 +38,12 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+
+    kotlin {
+        sourceSets.all {
+            kotlin.srcDir("build/generated/ksp/$name/kotlin")
+        }
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
@@ -82,14 +88,20 @@ dependencies {
 
     implementation(libs.coil.compose)
     implementation(libs.kotlinx.coroutines.android)
-    //Serializacion
+    //Serialization
     implementation(libs.kotlinx.serialization.json)// Or your preferred format
 
-    implementation (libs.retrofit.v290)
+    implementation (libs.retrofit.core)
     implementation (libs.okhttp)
 
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    ksp(libs.room.compiler)  // KSP para la generación de código
-    testImplementation(libs.room.testing)  // Opcional, si harás pruebas
+    ksp(libs.room.compiler)
+    testImplementation(libs.room.testing)
+
+    //Koin
+    implementation (libs.koin.android)
+    implementation (libs.koin.annotations)
+    implementation (libs.koin.androidx.compose)
+    ksp (libs.koin.ksp.compiler)
 }
