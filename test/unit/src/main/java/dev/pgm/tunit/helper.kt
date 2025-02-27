@@ -1,6 +1,6 @@
 package dev.pgm.tunit
 
-
+import dev.pgm.domain.Cocktail
 
 fun getSampleCocktails()=listOf(
         Cocktail(

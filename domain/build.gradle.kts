@@ -8,7 +8,4 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-dependencies {
-    implementation(project(":domain"))
-}
 
