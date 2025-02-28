@@ -1,3 +1,26 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+*.iml
+
+# Generated files
+/.idea/
+/.idea_modules/
+
+/# Gradle
+/.gradle/
+/build/
+
+# Android specific
+/local.properties
+
+# Log files
+*.log
+
+# Android Studio cache
+/.android
+
+
+# Miscellaneous
+*.apk
+*.ap_

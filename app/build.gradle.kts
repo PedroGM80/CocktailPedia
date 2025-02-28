@@ -104,4 +104,15 @@ dependencies {
     implementation (libs.koin.annotations)
     implementation (libs.koin.androidx.compose)
     ksp (libs.koin.ksp.compiler)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.koin.test)
+
+
+    testImplementation(libs.mockk)
+    implementation(libs.turbine)
 }
