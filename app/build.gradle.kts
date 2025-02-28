@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":usecases"))
+    implementation(project(":test:unit"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)
@@ -115,4 +116,4 @@ dependencies {
 
     testImplementation(libs.mockk)
     implementation(libs.turbine)
-}
+    testImplementation("org.robolectric:robolectric:4.9")}

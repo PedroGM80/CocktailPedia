@@ -18,10 +18,10 @@ import java.util.Locale
 
 @KoinViewModel
 class AddCocktailViewModel : ViewModel() {
-    private var temporaryFileUri: Uri? = null
+    internal var temporaryFileUri: Uri? = null
 
-    private val _isLoading = MutableStateFlow(false)
-    private val _error = MutableStateFlow<String?>(null)
+    internal val _isLoading = MutableStateFlow(false)
+    internal    val _error = MutableStateFlow<String?>(null)
 
 
     fun createImageUri(context: Context): Uri {
