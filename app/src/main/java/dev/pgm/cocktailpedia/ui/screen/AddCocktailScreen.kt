@@ -76,7 +76,7 @@ fun AddCocktailScreen(
         ActivityResultContracts.TakePicture()
     ) { success ->
         if (success) {
-            photoUri = viewModel.getTemporaryFileUri()
+            photoUri = viewModel.uri
         }
     }
 
@@ -85,7 +85,7 @@ fun AddCocktailScreen(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            cameraLauncher.launch(viewModel.createImageUri(context))
+            cameraLauncher.launch(viewModel.uri)
         }
     }
 

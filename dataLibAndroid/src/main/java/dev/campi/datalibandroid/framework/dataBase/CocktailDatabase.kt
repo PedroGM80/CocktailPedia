@@ -1,4 +1,4 @@
-package dev.pgm.cocktailpedia.framework.dataBase
+package dev.campi.datalibandroid.framework.dataBase
 
 import android.content.Context
 import androidx.room.Database

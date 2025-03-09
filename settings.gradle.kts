@@ -15,6 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "CocktailPedia"
 include(":app")
-include(":data")
 include(":domain")
 include(":usecases")
+include(":dataLibAndroid")

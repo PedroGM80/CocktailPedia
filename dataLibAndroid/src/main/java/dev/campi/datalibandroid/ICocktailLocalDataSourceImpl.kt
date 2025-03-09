@@ -1,17 +1,16 @@
-package dev.pgm.cocktailpedia
+package dev.campi.datalibandroid
 
 import android.content.Context
-import dev.pgm.cocktailpedia.framework.dataBase.CocktailDatabase
-import dev.pgm.cocktailpedia.framework.dataBase.toCocktail
-import dev.pgm.cocktailpedia.framework.dataBase.toCocktailDto
-import dev.pgm.data.CocktailLocalDataSource
+import dev.campi.datalibandroid.framework.dataBase.toCocktail
+import dev.campi.datalibandroid.framework.dataBase.toCocktailDto
 import dev.pgm.domain.Cocktail
-import dev.pgm.domain.CocktailResponse
+import dev.pgm.domain.CocktailModel
+import dev.pgm.domain.ICocktailLocalDataSource
 import org.koin.core.annotation.Factory
 
 @Factory
-class CocktailLocalDataSource(context: Context) : CocktailLocalDataSource {
-    private val db = CocktailDatabase.getDatabase(context)
+class ICocktailLocalDataSourceImpl(context: Context) : ICocktailLocalDataSource {
+    private val db = dev.campi.datalibandroid.framework.dataBase.CocktailDatabase.getDatabase(context)
     private val dao = db.cocktailDao()
 
     override suspend fun insertCocktail(cocktail: Cocktail) {
@@ -46,9 +45,9 @@ class CocktailLocalDataSource(context: Context) : CocktailLocalDataSource {
         dao.updateFavoriteStatus(cocktailId, isFavorite)
     }
 
-    override suspend fun getCocktailByLetter(firstLetter: String): CocktailResponse {
+    override suspend fun getCocktailByLetter(firstLetter: String): CocktailModel {
         val cocktails = dao.getCocktailsByLetter(firstLetter).map { it.toCocktail() }
-        return CocktailResponse(cocktails)
+        return CocktailModel(cocktails)
     }
 
     override suspend fun deleteCocktail(cocktailId: String) {

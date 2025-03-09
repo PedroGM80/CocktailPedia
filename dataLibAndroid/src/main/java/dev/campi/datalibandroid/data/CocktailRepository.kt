@@ -1,17 +1,19 @@
-package dev.pgm.data
+package dev.campi.datalibandroid.data
 
 import dev.pgm.domain.Cocktail
-import dev.pgm.domain.CocktailResponse
+import dev.pgm.domain.CocktailModel
+import dev.pgm.domain.ICocktailLocalDataSource
+import dev.pgm.domain.ICocktailRemoteDataSource
 import dev.pgm.domain.ICocktailRepository
 import org.koin.core.annotation.Factory
 
 @Factory
 class CocktailRepository(
-    private val remoteDataSource: CocktailRemoteDataSource,
-    private val localDataSource: CocktailLocalDataSource
+    private val remoteDataSource: ICocktailRemoteDataSource,
+    private val localDataSource: ICocktailLocalDataSource
 ) : ICocktailRepository {
 
-    override suspend fun getRemoteCocktailsByFirstLetter(firstLetter: String): CocktailResponse {
+    override suspend fun getRemoteCocktailsByFirstLetter(firstLetter: String): CocktailModel {
         try {
             // Fetch from remote
             val remoteResponse = remoteDataSource.getCocktailsByFirstLetter(firstLetter)
@@ -25,11 +27,11 @@ class CocktailRepository(
         } catch (e: Exception) {
             // If remote fails, return local data
             val localCocktails = localDataSource.getAllCocktails()
-            return CocktailResponse(localCocktails)
+            return CocktailModel(localCocktails)
         }
     }
 
-    override suspend fun getCocktailsByFirstLetter(firstLetter: String): CocktailResponse {
+    override suspend fun getCocktailsByFirstLetter(firstLetter: String): CocktailModel {
 
         return localDataSource.getCocktailByLetter(firstLetter)
     }

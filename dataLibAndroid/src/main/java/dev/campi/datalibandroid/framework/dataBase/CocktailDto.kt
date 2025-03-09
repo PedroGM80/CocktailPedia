@@ -1,4 +1,4 @@
-package dev.pgm.cocktailpedia.framework.dataBase
+package dev.campi.datalibandroid.framework.dataBase
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

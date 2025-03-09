@@ -1,9 +1,6 @@
-package dev.pgm.data
+package dev.pgm.domain
 
-import dev.pgm.domain.Cocktail
-import dev.pgm.domain.CocktailResponse
-
-interface CocktailLocalDataSource {
+interface ICocktailLocalDataSource {
 
     suspend fun insertCocktail(cocktail: Cocktail)
     suspend fun insertCocktails(cocktails: List<Cocktail>)
@@ -15,7 +12,7 @@ interface CocktailLocalDataSource {
 
     suspend fun updateCocktail(cocktail: Cocktail)
     suspend fun updateFavoriteStatus(cocktailId: String, isFavorite: Boolean)
-    suspend fun getCocktailByLetter(firstLetter: String): CocktailResponse
+    suspend fun getCocktailByLetter(firstLetter: String): CocktailModel
     suspend fun deleteCocktail(cocktailId: String)
     suspend fun deleteAllCocktails()
 }

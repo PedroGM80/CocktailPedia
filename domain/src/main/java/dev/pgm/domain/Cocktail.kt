@@ -1,6 +1,8 @@
 package dev.pgm.domain
 
+import androidx.compose.runtime.Stable
 
+@Stable
 data class Cocktail(
     val isFavorite: Boolean,
     val idDrink: String,

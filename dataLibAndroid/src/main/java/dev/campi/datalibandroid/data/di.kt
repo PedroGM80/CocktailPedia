@@ -1,4 +1,4 @@
-package dev.pgm.data
+package dev.campi.datalibandroid.data
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module

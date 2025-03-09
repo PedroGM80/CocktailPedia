@@ -1,5 +1,5 @@
 package dev.pgm.domain
 
-data class CocktailResponse(
+data class CocktailModel(
     val drinks: List<Cocktail>?
 )
