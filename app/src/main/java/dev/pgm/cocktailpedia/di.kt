@@ -26,7 +26,6 @@ import org.koin.ksp.generated.module
 @ComponentScan
 class AppModule {
 
-
     @Single
     fun CocktailDatabase(ctx: Context) = Room.databaseBuilder(
         ctx, CocktailDatabase::class.java,
