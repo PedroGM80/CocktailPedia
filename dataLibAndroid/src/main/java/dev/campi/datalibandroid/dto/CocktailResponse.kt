@@ -2,6 +2,7 @@ package dev.campi.datalibandroid.dto
 
 
 import androidx.annotation.Keep
+import dev.pgm.domain.Cocktail
 import dev.pgm.domain.CocktailModel
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -42,8 +43,8 @@ fun CocktailListResponse.toDomain(): CocktailModel {
     )
 }
 
-fun CocktailResponse.toDomain(): dev.pgm.domain.Cocktail {
-    return dev.pgm.domain.Cocktail(
+fun CocktailResponse.toDomain(): Cocktail {
+    return Cocktail(
         isFavorite = isFavorite,
         idDrink = idDrink,
         strDrink = strDrink,
@@ -64,3 +65,36 @@ fun CocktailResponse.toDomain(): dev.pgm.domain.Cocktail {
         strMeasure5 = strMeasure5
     )
 }
+
+fun CocktailModel.toDto(): CocktailListResponse {
+    return this@toDto.drinks?.let {
+        CocktailListResponse(
+            drinks = it.map { cocktail -> cocktail.toDto() }
+        )
+    } ?: CocktailListResponse(emptyList())
+}
+
+fun Cocktail.toDto(): CocktailResponse {
+    return CocktailResponse(
+        isFavorite = isFavorite,
+        idDrink = idDrink,
+        strDrink = strDrink,
+        strDrinkThumb = strDrinkThumb,
+        strInstructions = strInstructions,
+        strCategory = strCategory,
+        strAlcoholic = strAlcoholic,
+        strGlass = strGlass,
+        strIngredient1 = strIngredient1,
+        strIngredient2 = strIngredient2,
+        strIngredient3 = strIngredient3,
+        strIngredient4 = strIngredient4,
+        strIngredient5 = strIngredient5,
+        strMeasure1 = strMeasure1,
+        strMeasure2 = strMeasure2,
+        strMeasure3 = strMeasure3,
+        strMeasure4 = strMeasure4,
+        strMeasure5 = strMeasure5,
+    )
+}
+
+

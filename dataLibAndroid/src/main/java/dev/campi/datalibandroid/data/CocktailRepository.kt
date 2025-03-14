@@ -1,5 +1,6 @@
 package dev.campi.datalibandroid.data
 
+import android.util.Log
 import dev.pgm.domain.Cocktail
 import dev.pgm.domain.CocktailModel
 import dev.pgm.domain.ICocktailLocalDataSource
@@ -13,21 +14,20 @@ class CocktailRepository(
     private val localDataSource: ICocktailLocalDataSource
 ) : ICocktailRepository {
 
-    override suspend fun getRemoteCocktailsByFirstLetter(firstLetter: String): CocktailModel {
+    override suspend fun getRemoteCocktailsByFirstLetter(firstLetter: String): Result<CocktailModel> {
         try {
             // Fetch from remote
-            val remoteResponse = remoteDataSource.getCocktailsByFirstLetter(firstLetter)
-
-            // Store all cocktails in local database
-            remoteResponse.drinks?.forEach { cocktail ->
-                localDataSource.insertCocktail(cocktail)
+            return remoteDataSource.getCocktailsByFirstLetter(firstLetter).onFailure {
+                throw it
+            }.onSuccess {
+                localDataSource.insertCocktails(it.drinks.orEmpty())
             }
 
-            return remoteResponse
+
         } catch (e: Exception) {
             // If remote fails, return local data
-            val localCocktails = localDataSource.getAllCocktails()
-            return CocktailModel(localCocktails)
+            val localCocktails: List<Cocktail> = localDataSource.getAllCocktails()
+            return Result.success(CocktailModel(localCocktails))
         }
     }
 
@@ -48,9 +48,17 @@ class CocktailRepository(
         try {
             alphabet.forEach { letter ->
                 try {
-                    val response = remoteDataSource.getCocktailsByFirstLetter(letter.toString())
-                    response.drinks?.forEach { cocktail ->
-                        localDataSource.insertCocktail(cocktail)
+                    val result: Result<CocktailModel> =
+                        remoteDataSource.getCocktailsByFirstLetter(letter.toString())
+                    result.onSuccess {
+                        it.drinks?.forEach { cocktail ->
+                            localDataSource.insertCocktail(cocktail)
+                        }
+                    }.onFailure {
+                        Log.e(
+                            "CocktailRepository",
+                            "Error fetching cocktails for letter $letter: ${it.message}"
+                        )
                     }
                 } catch (e: Exception) {
                     // Log error but continue with next letter
