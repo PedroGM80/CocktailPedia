@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import dev.campi.datalibandroid.dto.CocktailDto
 
 const val COCKTAIL_DATABASE = "cocktail_database"
 

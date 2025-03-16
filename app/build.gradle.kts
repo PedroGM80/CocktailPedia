@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":usecases"))
     implementation(project(":dataLibAndroid"))
+    implementation(project(":"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime)
@@ -104,4 +105,15 @@ dependencies {
     implementation (libs.koin.annotations)
     implementation (libs.koin.androidx.compose)
     ksp (libs.koin.ksp.compiler)
-}
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.koin.test)
+
+
+    testImplementation(libs.mockk)
+    implementation(libs.turbine)
+    testImplementation("org.robolectric:robolectric:4.9")}

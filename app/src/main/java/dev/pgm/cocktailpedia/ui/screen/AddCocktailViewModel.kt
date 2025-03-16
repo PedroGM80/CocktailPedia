@@ -16,7 +16,10 @@ class AddCocktailViewModel(
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading
+
     private val _error = MutableStateFlow<String?>(null)
+    val error = _error
 
     val uri by lazy {
         createImageUriUseCase()

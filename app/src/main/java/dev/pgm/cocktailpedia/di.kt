@@ -3,8 +3,8 @@ package dev.pgm.cocktailpedia
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import dev.campi.datalibandroid.CocktailServerDataSource
-import dev.campi.datalibandroid.ICocktailLocalDataSourceImpl
+import dev.campi.datalibandroid.CocktailServerDataSourceImpl
+import dev.campi.datalibandroid.CocktailLocalDataSourceImpl
 import dev.campi.datalibandroid.data.DataModule
 import dev.campi.datalibandroid.framework.dataBase.COCKTAIL_DATABASE
 import dev.campi.datalibandroid.framework.dataBase.CocktailDatabase
@@ -38,12 +38,12 @@ class AppModule {
 
 @Single
 fun provideCocktailLocalDataSource(context: Context): ICocktailLocalDataSource {
-    return ICocktailLocalDataSourceImpl(context)
+    return CocktailLocalDataSourceImpl(context)
 }
 
 @Single
 fun provideCocktailRemoteDataSource(): ICocktailRemoteDataSource {
-    return  CocktailServerDataSource()
+    return  CocktailServerDataSourceImpl()
 }
 
 fun Application.initDI() {

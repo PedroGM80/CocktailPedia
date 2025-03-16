@@ -1,15 +1,15 @@
 package dev.campi.datalibandroid
 
 import android.content.Context
-import dev.campi.datalibandroid.framework.dataBase.toCocktail
-import dev.campi.datalibandroid.framework.dataBase.toCocktailDto
+import dev.campi.datalibandroid.dto.toCocktail
+import dev.campi.datalibandroid.dto.toCocktailDto
 import dev.pgm.domain.Cocktail
 import dev.pgm.domain.CocktailModel
 import dev.pgm.domain.ICocktailLocalDataSource
 import org.koin.core.annotation.Factory
 
 @Factory
-class ICocktailLocalDataSourceImpl(context: Context) : ICocktailLocalDataSource {
+class CocktailLocalDataSourceImpl(context: Context) : ICocktailLocalDataSource {
     private val db = dev.campi.datalibandroid.framework.dataBase.CocktailDatabase.getDatabase(context)
     private val dao = db.cocktailDao()
 
@@ -58,3 +58,5 @@ class ICocktailLocalDataSourceImpl(context: Context) : ICocktailLocalDataSource 
         dao.deleteAllCocktails()
     }
 }
+
+
