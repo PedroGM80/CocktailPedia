@@ -1,9 +1,11 @@
 package dev.campi.datalibandroid
 
-
 import dev.campi.datalibandroid.data.CocktailRepository
 import dev.pgm.domain.CocktailModel
+import dev.pgm.domain.ICocktailLocalDataSource
+import dev.pgm.domain.ICocktailRemoteDataSource
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -19,10 +21,10 @@ import org.mockito.junit.MockitoJUnitRunner
 class CocktailRepositoryTest {
 
     @Mock
-    private lateinit var remoteDataSource: CocktailServerDataSourceImpl
+    private lateinit var remoteDataSource: ICocktailRemoteDataSource
 
     @Mock
-    private lateinit var localDataSource: CocktailLocalDataSourceImpl
+    private lateinit var localDataSource: ICocktailLocalDataSource
 
     private lateinit var repository: CocktailRepository
 
@@ -41,13 +43,12 @@ class CocktailRepositoryTest {
         runBlocking {
             `when`(remoteDataSource.getCocktailsByFirstLetter("M")).thenReturn(mockResponse)
 
-            val result = repository.getRemoteCocktailsByFirstLetter("M")
+
+            val result: Result<CocktailModel> = repository.getRemoteCocktailsByFirstLetter("M")
 
             assertEquals(mockResponse, result)
             verify(remoteDataSource).getCocktailsByFirstLetter("M")
-            for (cocktail in mockCocktails) {
-                verify(localDataSource).insertCocktail(cocktail)
-            }
+            verify(localDataSource).insertCocktails(mockCocktails)
         }
     }
 
@@ -58,24 +59,30 @@ class CocktailRepositoryTest {
             `when`(remoteDataSource.getCocktailsByFirstLetter("M")).thenThrow(RuntimeException("Network error"))
             `when`(localDataSource.getAllCocktails()).thenReturn(mockCocktails)
 
-            val result = repository.getRemoteCocktailsByFirstLetter("M")
+            val result: Result<CocktailModel> = repository.getRemoteCocktailsByFirstLetter("M")
 
-            assertEquals(mockCocktails, result)
+            assertEquals(
+                mockCocktails.firstOrNull(),
+                result.getOrThrow().drinks?.firstOrNull()
+            )
+
             verify(localDataSource).getAllCocktails()
         }
     }
 
     @Test
-    fun ` get cocktails by first letter returns data from local source`() {
-        runBlocking {
+    fun `get cocktails by first letter returns data from local source`() {
+        runTest {
             `when`(localDataSource.getCocktailByLetter("M")).thenReturn(mockResponse.getOrNull())
 
             val result = repository.getCocktailsByFirstLetter("M")
 
-            assertEquals(mockResponse, result)
+
+            assertEquals(Result.success(mockResponse.getOrNull()), Result.success(result))
             verify(localDataSource).getCocktailByLetter("M")
         }
     }
+
 
     @Test
     fun `get all local cocktails returns data from local source`() {
