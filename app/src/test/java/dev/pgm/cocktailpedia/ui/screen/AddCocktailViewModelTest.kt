@@ -3,11 +3,9 @@ package dev.pgm.cocktailpedia.ui.screen
 import android.content.Context
 import dev.campi.datalibandroid.CocktailLocalDataSourceImpl
 import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -24,21 +22,18 @@ class AddCocktailViewModelTest {
     private lateinit var viewModel: AddCocktailViewModel
     private lateinit var mockContext: Context
     private lateinit var mockDataSource: CocktailLocalDataSourceImpl
+    private lateinit var mockCreateImageUriUseCase: CreateImageUriUseCase
 
     @Before
     fun setup() {
-        mockContext = mockk<Context>(relaxed = true)
-
+        mockContext = mockk(relaxed = true)
         mockDataSource = mockk(relaxed = true)
+        mockCreateImageUriUseCase = mockk(relaxed = true)
 
         viewModel = AddCocktailViewModel(
             dataSource = mockDataSource,
-            createImageUriUseCase = mockk(),
+            createImageUriUseCase = mockCreateImageUriUseCase
         )
-
-
-        every { mockContext.applicationContext } returns mockContext
-        every { CocktailLocalDataSourceImpl(mockContext) } returns mockDataSource
     }
 
     @Test
@@ -46,21 +41,16 @@ class AddCocktailViewModelTest {
         runTest {
             val mockCocktail = getSampleCocktails().first()
 
+            coEvery { mockDataSource.insertCocktail(any()) } returns Unit
+
             viewModel.addCocktail(mockCocktail, mockContext)
 
             advanceUntilIdle()
 
-            verify {
-                runBlocking {
-                    mockDataSource.insertCocktail(mockCocktail)
-
-                }
-            }
-
-            assertEquals(true, viewModel.isLoading.value)
-            assertEquals(null, viewModel.error.value)
+            coVerify { mockDataSource.insertCocktail(mockCocktail) }
 
             assertEquals(false, viewModel.isLoading.value)
+            assertEquals(null, viewModel.error.value)
         }
 
     @Test
@@ -73,8 +63,8 @@ class AddCocktailViewModelTest {
 
         advanceUntilIdle()
 
-        assertEquals("Error saving cocktail: Database error", viewModel.error.value)
 
+        assertEquals("Error saving cocktail: Database error", viewModel.error.value)
         assertEquals(false, viewModel.isLoading.value)
     }
 }
